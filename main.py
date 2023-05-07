@@ -48,18 +48,14 @@ class Board:
             self.board[i] = "💣"
 
     def load_cell_numbers(self):
-        for row in range(self._rows):
-            for col in range(self._cols):
-                index = row * self._cols + col
-                if index in self._loaded_cells:
-                    continue
-                neighbor_indices = self.get_neighbor_indices(
-                    i := self.row_col_to_index(row, col)
-                )
-                nearby_bomb_count = len(
-                    set(self._loaded_cells).intersection(neighbor_indices)
-                )
-                self.board[i] = nearby_bomb_count
+        for index in range(self.grid_size):
+            if index in self._loaded_cells:
+                continue
+            neighbor_indices = self.get_neighbor_indices(index)
+            nearby_bomb_count = len(
+                set(self._loaded_cells).intersection(neighbor_indices)
+            )
+            self.board[index] = nearby_bomb_count
 
     def row_col_to_index(self, row, col):
         return row * self._cols + col
